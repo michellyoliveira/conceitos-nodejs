@@ -11,7 +11,13 @@ app.use(cors());
 const repositories = [];
 
 app.get("/repositories", (request, response) => {
-  return response.json(repositories);
+  const { id } = request.query;
+
+  const results = id
+  ? repositories.filter(repository => repository.id.includes(id))
+  : repositories;
+
+  return response.json(results);
 });
 
 app.post("/repositories", (request, response) => {
